@@ -1,13 +1,13 @@
 Name: apache-tomcat
-Version: 7.0.37
+Version: 7.0.23
 Release: 1
 Summary: Open source software implementation of the Java Servlet and JavaServer Pages technologies.
 Group: Productivity/Networking/Web/Servers 
 License: Apache Software License.
 Url: http://tomcat.apache.org 
-Source0: http://apache.mirror.iweb.ca/tomcat/tomcat-7/v%{version}/src/%{name}-%{version}-src.tar.gz
-Source1: http://www.apache.org/dist/tomcat/tomcat-7/v%{version}/src/%{name}-%{version}-src.tar.gz.md5
-Source2: https://raw.github.com/TrentonAdams/%{name}-rpm/master/%{name}-initscript
+Source0: http://archive.apache.org/dist/tomcat/tomcat-7/v%{version}/src/%{name}-%{version}-src.tar.gz
+Source1: http://archive.apache.org/dist/tomcat/tomcat-7/v%{version}/src/%{name}-%{version}-src.tar.gz.md5
+Source2: https://raw.github.com/lolaent/%{name}-rpm/master/%{name}-initscript
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: ant
@@ -136,6 +136,8 @@ fi
 /opt/%{name}/webapps/host-manager
 
 %changelog
+* Tue Jan 21 2014 - Sean Burlington <sean@practicalweb.co.uk> 70.0.23-1
+ - backport to older version using archive URL
 * Wed Feb 27 2013 - Trenton D. Adams <trenton.d.adams@gmail.com> 7.0.37-1
  - update to latest tomcat version
 * Sat Jan 5 2013 - Trenton D. Adams <trenton.d.adams@gmail.com> 7.0.34-9
