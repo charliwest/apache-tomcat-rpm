@@ -67,7 +67,8 @@ The host-manager web application of Apache Tomcat.
 cd %{_sourcedir}/
 md5sum -c apache-tomcat-%{version}-src.tar.gz.md5 || (echo "Source archive failed m5sum check" && exit 1)
 
-%setup -q -n %{name}-%{version}-src
+%setup -q -n apache-tomcat-%{version}-src
+
 
 # This tells ant to install software in a specific directory.
 cat << EOF >> build.properties
