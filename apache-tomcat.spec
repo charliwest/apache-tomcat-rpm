@@ -7,7 +7,7 @@ License: Apache Software License.
 Url: http://tomcat.apache.org 
 Source0: http://archive.apache.org/dist/tomcat/tomcat-7/v%{version}/src/apache-tomcat-%{version}-src.tar.gz
 Source1: http://archive.apache.org/dist/tomcat/tomcat-7/v%{version}/src/apache-tomcat-%{version}-src.tar.gz.md5
-Source2: https://raw.github.com/lolaent/%{name}-rpm/master/apache-tomcat-initscript
+Source2: https://raw.github.com/lolaent/apache-tomcat-rpm/master/apache-tomcat-initscript
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: ant
