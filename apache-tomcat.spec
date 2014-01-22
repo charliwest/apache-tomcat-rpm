@@ -65,7 +65,7 @@ The host-manager web application of Apache Tomcat.
 
 %prep
 cd %{_sourcedir}/
-md5sum -c %{name}-%{version}-src.tar.gz.md5 || (echo "Source archive failed m5sum check" && exit 1)
+md5sum -c apache-tomcat-%{version}-src.tar.gz.md5 || (echo "Source archive failed m5sum check" && exit 1)
 
 %setup -q -n %{name}-%{version}-src
 
