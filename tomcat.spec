@@ -6,8 +6,8 @@ Group: Productivity/Networking/Web/Servers
 License: Apache Software License.
 Url: http://tomcat.apache.org 
 Source0: http://archive.apache.org/dist/tomcat/tomcat-7/v%{version}/src/apache-tomcat-%{version}-src.tar.gz
-Source1: http://archive.apache.org/dist/apache-tomcat/tomcat-7/v%{version}/src/apache-tomcat-%{version}-src.tar.gz.md5
-Source2: https://raw.github.com/lolaent/%{name}-rpm/master/tomcat-initscript
+Source1: http://archive.apache.org/dist/tomcat/tomcat-7/v%{version}/src/apache-tomcat-%{version}-src.tar.gz.md5
+Source2: https://raw.github.com/lolaent/tapache-tomcat-rpm/master/tomcat-initscript
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: ant
