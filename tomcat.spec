@@ -7,13 +7,16 @@ License: Apache Software License.
 Url: http://tomcat.apache.org 
 Source0: http://archive.apache.org/dist/tomcat/tomcat-7/v%{version}/src/apache-tomcat-%{version}-src.tar.gz
 Source1: http://archive.apache.org/dist/tomcat/tomcat-7/v%{version}/src/apache-tomcat-%{version}-src.tar.gz.md5
-Source2: https://raw.github.com/lolaent/apache-tomcat-rpm/master/apache-tomcat-initscript
+Source2: https://raw.github.com/lolaent/%{name}-rpm/master/tomcat-initscript
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 BuildRequires: ant
 BuildRequires: ant-trax
 Requires: java
 BuildArch: x86_64
+
+
+%define install_path /opt/tomcat
 
 %description
 Apache Tomcat is an open source software implementation of the Java Servlet and JavaServer Pages technologies. The Java Servlet and JavaServer Pages specifications are developed under the Java Community Process.
@@ -66,13 +69,17 @@ The host-manager web application of Apache Tomcat.
 %prep
 cd %{_sourcedir}/
 md5sum -c apache-tomcat-%{version}-src.tar.gz.md5 || (echo "Source archive failed m5sum check" && exit 1)
+cd -
 
-%setup -q -n apache-tomcat-%{version}-src
+tar -zxf %{_sourcedir}/apache-tomcat-%{version}-src.tar.gz --transform s/apache-tomcat-%{version}/%{name}-%{version}/
 
+cd %{name}-%{version}-src
+#chown -R root.root .
+chmod -R a+rX,g-w,o-w .
 
 # This tells ant to install software in a specific directory.
 cat << EOF >> build.properties
-base.path=%{buildroot}/opt/%{name}
+base.path=%{buildroot}%{install_path}
 EOF
 
 %build
@@ -81,13 +88,13 @@ ant
 
 %install
 rm -Rf %{buildroot}
-mkdir -p %{buildroot}/opt/%{name}
-mkdir -p %{buildroot}/opt/%{name}/pid
+mkdir -p %{buildroot}%{install_path}
+mkdir -p %{buildroot}%{install_path}/pid
 mkdir -p %{buildroot}/etc/init.d/
 mkdir -p %{buildroot}/var/run/%{name}
 cd %{_builddir}/%{name}-%{version}-src
 ls -l
-%{__cp} -Rip ./output/build/{bin,conf,lib,logs,temp,webapps} %{buildroot}/opt/%{name}
+%{__cp} -Rip ./output/build/{bin,conf,lib,logs,temp,webapps} %{buildroot}%{install_path}
 %{__cp} %{SOURCE2} %{buildroot}/etc/init.d/%{name}
 
 %clean
@@ -109,32 +116,32 @@ fi
 
 %files
 %defattr(640,tomcat,tomcat,750)
-%dir /opt/%{name}
-%config /opt/%{name}/conf/*
-/opt/%{name}/bin
-/opt/%{name}/lib
-/opt/%{name}/logs
-/opt/%{name}/temp
-/opt/%{name}/pid
-%dir /opt/%{name}/webapps
+%dir %{install_path}
+%config %{install_path}/conf/*
+%{install_path}/bin
+%{install_path}/lib
+%{install_path}/logs
+%{install_path}/temp
+%{install_path}/pid
+%dir %{install_path}/webapps
 /var/run/%{name}
-%attr(0750,tomcat,tomcat) /opt/%{name}/bin/*.sh
+%attr(0750,tomcat,tomcat) %{install_path}/bin/*.sh
 %attr(0755,root,root) /etc/init.d/%{name}
 
 %files manager
-/opt/%{name}/webapps/manager
+%{install_path}/webapps/manager
 
 %files ROOT
-/opt/%{name}/webapps/ROOT
+%{install_path}/webapps/ROOT
 
 %files docs
-/opt/%{name}/webapps/docs
+%{install_path}/webapps/docs
 
 %files examples
-/opt/%{name}/webapps/examples
+%{install_path}/webapps/examples
 
 %files host-manager
-/opt/%{name}/webapps/host-manager
+%{install_path}/webapps/host-manager
 
 %changelog
 * Tue Jan 21 2014 - Sean Burlington <sean@practicalweb.co.uk> 70.0.23-1
