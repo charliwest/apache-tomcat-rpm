@@ -1,31 +1,31 @@
 #!/bin/sh
 #
-# tomcat
+# apache-tomcat
 #
 # chkconfig: - 85 15
 # description: Jakarta Tomcat Java Servlets and JSP server
 # processname: java
-# pidfile: /var/run/tomcat/pid
+# pidfile: /var/run/apache-tomcat/pid
 
 . /etc/rc.d/init.d/functions
 
 # Set Tomcat environment.
 USER=tomcat
-LOCKFILE=/var/lock/tomcat
-export BASEDIR=/opt/tomcat
+LOCKFILE=/var/lock/apache-tomcat
+export BASEDIR=/opt/apache-tomcat
 export TOMCAT_HOME=$BASEDIR
-export CATALINA_PID=/var/run/tomcat/pid
-export CATALINA_OPTS="-DHOME=$BASEDIR/home -Xmx512m -Djava.awt.headless=true"
+export CATALINA_PID=/var/run/apache-tomcat/pid
+export CATALINA_OPTS="-DHOME=$BASEDIR/home -Xms2048m -Xmx4096m -Djava.awt.headless=true"
 
 case "$1" in
   start)
-        echo -n "Starting tomcat: "
-        status -p $CATALINA_PID tomcat > /dev/null && failure || (su -p -s /bin/sh $USER -c "$TOMCAT_HOME/bin/catalina.sh start" > /dev/null && (touch $LOCKFILE ; success))
+        echo -n "Starting apache-tomcat: "
+        status -p $CATALINA_PID apache-tomcat > /dev/null && failure || (su -p -s /bin/sh $USER -c "$TOMCAT_HOME/bin/catalina.sh start" > /dev/null && (touch $LOCKFILE ; success))
         echo
         ;;
   stop)
         echo -n "Shutting down tomcat: "
-        status -p $CATALINA_PID tomcat > /dev/null && su -p -s /bin/sh $USER -c "$TOMCAT_HOME/bin/catalina.sh stop" > /dev/null && (rm -f $LOCKFILE ; success) || failure
+        status -p $CATALINA_PID apache-tomcat > /dev/null && su -p -s /bin/sh $USER -c "$TOMCAT_HOME/bin/catalina.sh stop" > /dev/null && (rm -f $LOCKFILE ; success) || failure
         echo
         ;;
   restart)
@@ -36,7 +36,7 @@ case "$1" in
        [ -e $LOCKFILE ] && $0 restart
        ;;
   status)
-        status -p $CATALINA_PID tomcat
+        status -p $CATALINA_PID apache-tomcat
         ;;
   *)
         echo "Usage: $0 {start|stop|restart|condrestart|status}"
